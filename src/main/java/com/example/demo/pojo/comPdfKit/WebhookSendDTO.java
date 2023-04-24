@@ -7,10 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * webhook消息队列发送消息信息
  *
- * @author SongFuQiang
- * @description saas回调参数
+ * @author tangxiangan
  */
 @Data
 @ToString

@@ -13,6 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author tangxiangan
+ */
 public class JsonUtils {
     private final static SimpleDateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -46,10 +49,10 @@ public class JsonUtils {
     /**
      * 将json格式的字符串的转化为Bean对象
      *
-     * @param <T>
-     * @param jsonStr
-     * @param clazz
-     * @return
+     * @param <T> t
+     * @param jsonStr  jsonStr
+     * @param clazz 类
+     * @return 对象
      */
     public static <T> T jsonStringToBean(String jsonStr, Class<T> clazz, DateFormat dateFormat) {
         if (StringUtils.isEmpty(jsonStr)) {
@@ -81,10 +84,10 @@ public class JsonUtils {
     /**
      * 将json格式的字符串（数组形式）的转化为List对象
      *
-     * @param <T>
-     * @param jsonArrStr
+     * @param <T>   t
+     * @param jsonArrStr json
      * @param clazz      List中对象类型
-     * @return
+     * @return list
      */
     public static <T> List<T> jsonStringToList(String jsonArrStr, Class<T> clazz) {
         return jsonStringToList(jsonArrStr, clazz, DEFAULT_FORMAT);
@@ -93,10 +96,10 @@ public class JsonUtils {
     /**
      * 将json格式的字符串（数组形式）的转化为List对象
      *
-     * @param <T>
-     * @param jsonArrStr
+     * @param <T> 对象
+     * @param jsonArrStr 数组
      * @param clazz      List中对象类型
-     * @return
+     * @return list
      */
     public static <T> List<T> jsonStringToList(String jsonArrStr, Class<T> clazz, DateFormat dateFormat) {
         if (StringUtils.isEmpty(jsonArrStr)) {

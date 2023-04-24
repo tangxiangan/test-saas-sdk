@@ -1,45 +1,35 @@
 package com.example.demo.client;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.example.demo.constant.ComPdfKitConstant;
 import com.example.demo.constant.CommonConstant;
-import com.example.demo.constant.PaddleAPIConstant;
 import com.example.demo.exception.BackendRuntimeException;
 import com.example.demo.pojo.comPdfKit.*;
 import com.example.demo.utils.JsonUtils;
-import com.google.common.collect.Iterables;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static java.time.Duration.*;
 
 /**
  * @author txa 2023/1/16
  * <p>
  * PaddleClient
  */
-@Component
+
 @Slf4j
 public class ComPdfKitClient {
 
@@ -80,7 +70,7 @@ public class ComPdfKitClient {
 
 
     private ComPdfKitClient(String publicKey, String secretKey, Duration readTimeout, Duration connectTimeout) {
-        this.address = "api/";
+        this.address = "http://101.132.103.13:8090/server/";
         this.publicKey = publicKey;
         this.secretKey = secretKey;
         this.restTemplate = new RestTemplateBuilder()
@@ -90,6 +80,20 @@ public class ComPdfKitClient {
                 .build();
         refreshAccessToken();
     }
+
+    public ComPdfKitClient(String publicKey, String secretKey) {
+        this.address = "http://101.132.103.13:8090/server/";
+        this.publicKey = publicKey;
+        this.secretKey = secretKey;
+        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
+        restTemplateBuilder.setReadTimeout(ofSeconds(60 * 5));
+        restTemplateBuilder.setConnectTimeout(ofSeconds(60 * 5));
+        restTemplateBuilder.setBufferRequestBody(false);
+        this.restTemplate = restTemplateBuilder
+                .build();
+        refreshAccessToken();
+    }
+
 
 
     /**
@@ -126,9 +130,6 @@ public class ComPdfKitClient {
         return responseEntity.getBody().getData();
     }
 
-    public static ComPdfKitClientBuilder builder() {
-        return new ComPdfKitClientBuilder();
-    }
 
 
     private HttpHeaders basicHeaders() {
@@ -174,7 +175,7 @@ public class ComPdfKitClient {
      * @param password 密码
      * @return UploadFileResult
      */
-    public UploadFileResult uploadFile(File file, String taskId, String password) throws Exception {
+    public UploadFileResult uploadFile(File file, String taskId, String password)  {
         log.info("开始上传文件，taskId：{},password:{}",taskId,password);
         String url = address.concat(ComPdfKitConstant.API_V1_UPLOAD_FILE);
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();;
@@ -195,17 +196,19 @@ public class ComPdfKitClient {
             );
         } catch (Exception e) {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL + "{}", e.getMessage());
-            throw new Exception(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL + e.getMessage());
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL + e.getMessage());
         }finally {
             try {
-                boolean delete = file.delete();
+                if(file.exists()){
+                    boolean delete = file.delete();
+                }
             }catch (Exception e){
                 log.error("删除文件失败；{}",e.getMessage());
             }
         }
 
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) || ObjectUtils.isEmpty(response.getBody())) {
-            throw new Exception(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL+ Objects.requireNonNull(response.getBody()).getMsg());
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL+ Objects.requireNonNull(response.getBody()).getMsg());
         }
         return response.getBody().getData();
     }
@@ -265,38 +268,6 @@ public class ComPdfKitClient {
         }
         log.info("查询状态成功：{}",JsonUtils.getJsonString(response.getBody().getData()));
         return response.getBody().getData();
-    }
-
-    public static class ComPdfKitClientBuilder {
-        private String projectKey;
-        private String secretKey;
-        private Duration readTimeout;
-        private Duration connectTimeout;
-
-        private ComPdfKitClientBuilder() {
-        }
-
-        public ComPdfKitClientBuilder readTimeout(Duration readTimeout) {
-            this.readTimeout = readTimeout;
-            return this;
-        }
-
-        public ComPdfKitClientBuilder connectTimeout(Duration connectTimeout) {
-            this.connectTimeout = connectTimeout;
-            return this;
-        }
-
-
-        public ComPdfKitClient build() {
-            if (this.readTimeout == null) {
-                this.readTimeout = Duration.ofSeconds(60*5);
-            }
-            if (this.connectTimeout == null) {
-                this.connectTimeout = Duration.ofSeconds(60*5);
-            }
-            return new ComPdfKitClient( this.projectKey, this.secretKey, this.readTimeout, this.connectTimeout);
-        }
-
     }
 
 }

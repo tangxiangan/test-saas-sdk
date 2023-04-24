@@ -1,6 +1,7 @@
 package com.example.demo.pojo;
 
 import com.example.demo.constant.CommonConstant;
+import com.example.demo.utils.JsonUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -57,8 +58,12 @@ public class ResultMap<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ResultMap<?> resultMap = (ResultMap<?>) o;
         return code == resultMap.code &&
                 Objects.equals(msg, resultMap.msg) &&

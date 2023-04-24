@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   profiles:
-    include: local-db
+    include:
 cors:
   allow-headers: "X-Requested-With,Content-Type,Cookie,Accept,authorization,Authorization,credential,keyword,x-auth-token,iv,jsonFlag,timeStamp,random,range"
   allow-methods: "*"
@@ -13,14 +13,4 @@ cors:
 httpMatchers:
   request: "/,/login,/logout,/user/register,/user/resetPassword,/oauth/**,/auth/**,/team/getByInviteKey,/team/checkInviteCode,/team/join,/team/getByInviteToken,/iterationFile/downloadFile,/iterationFile/img/**"
   web: "/hystrix.stream,/webjars/**,/resources/**,/swagger-ui.html,/swagger-resources/**,/v2/api-docs"
-
-client:
-  paddle:
-    checkoutHost: https://sandbox-checkout.paddle.com/api/1.0
-    vendorsHost: https://sandbox-vendors.paddle.com/api/2.0
-    vendorId: 2760
-    vendorAuthCode: a618d381d6e20acd36bb0f130586779e98641137a9f649b878
-    readTimeOut: 30000
-    connectTimeout: 60000
-    publicKey: MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA5cPUUYfdeOwkBpMM4iI9TO79SDZCZwRdUTkeH3WpbTqWXWUoRQZTlsnGS0yeUU7hExDjCrWCW7pAw3YHIYJJDsiERHd+3RoCRnQAYOWxMJ5LGeaEOZzj66Ng6RS5FqVh8kPL+QTwyqKWZfIamw1TxsUBcSq5I8QB9A3ugH5UUnAK/VrG8EV8hLnUYdu5OtUusZ/HggRgKR4+IJ79h/5xYrjFgUsgWyuyG6slxLomXKt2MDwGPmxntumxbN5LEXIkOA/2d+M1wfoQj6hAwxD5ewI4+YJiHZ5F1rP+cBAGPDaYh/Fg1b4b1SSzpz7Nvn0gbDluori1EC7Sf8+VlrTCdJ7cEHqTR+LjzO3apPfs46+M36g3YPGVZ3vQtfFoxh+SEKYfXRp9NNoUCYAHOsDv1cZ5tZYAqSIhQjhZt9BrAexNHy/rcfs9wow3Lf19U0QSuThBJwbnsVI0CAhNTona4LL1E35yNESBipArhSNF8Gmz1z+GMS3CQ3jyqy6XXzkaS9WFpJNmP67aqekKsfyhp0Xv0NK4PXgQ75lQ1aQuzIOoAmvPLw5VFkvr3lXug62vxXNujM9M+5YRghx98VxxkjUxQmGQOvRKeZ55ebSX9JQgqXdZejnxhuYyc+RFWu7Q1jMu5ecD26ld82YYRsgO9JZbO8CXGCyAltQ39TRJ9uECAwEAAQ==
 
