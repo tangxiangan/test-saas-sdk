@@ -1,10 +1,12 @@
 package com.example.demo.pojo.comPdfKit;
 
-import lombok.Data;
 
 import java.util.List;
 
-@Data
+
+/**
+ * @author tangxiangan
+ */
 public class QueryTaskInfoResult {
 
     /**
@@ -54,6 +56,101 @@ public class QueryTaskInfoResult {
     /**
      * 任务文件信息
      */
-    private List<FileInfoDto> fileInfoDTOList;
+    private List<FileInfoDTO> fileInfoDTOList;
 
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public Integer getTaskFileNum() {
+        return taskFileNum;
+    }
+
+    public void setTaskFileNum(Integer taskFileNum) {
+        this.taskFileNum = taskFileNum;
+    }
+
+    public String getTaskSuccessNum() {
+        return taskSuccessNum;
+    }
+
+    public void setTaskSuccessNum(String taskSuccessNum) {
+        this.taskSuccessNum = taskSuccessNum;
+    }
+
+    public String getTaskFailNum() {
+        return taskFailNum;
+    }
+
+    public void setTaskFailNum(String taskFailNum) {
+        this.taskFailNum = taskFailNum;
+    }
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public String getAssetTypeId() {
+        return assetTypeId;
+    }
+
+    public void setAssetTypeId(String assetTypeId) {
+        this.assetTypeId = assetTypeId;
+    }
+
+    public String getTaskCost() {
+        return taskCost;
+    }
+
+    public void setTaskCost(String taskCost) {
+        this.taskCost = taskCost;
+    }
+
+    public Long getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(Long taskTime) {
+        this.taskTime = taskTime;
+    }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    public String getTargetType() {
+        return targetType;
+    }
+
+    public void setTargetType(String targetType) {
+        this.targetType = targetType;
+    }
+
+    public String getCallbackUrl() {
+        return callbackUrl;
+    }
+
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
+    }
+
+    public List<FileInfoDTO> getFileInfoDTOList() {
+        return fileInfoDTOList;
+    }
+
+    public void setFileInfoDTOList(List<FileInfoDTO> fileInfoDTOList) {
+        this.fileInfoDTOList = fileInfoDTOList;
+    }
 }

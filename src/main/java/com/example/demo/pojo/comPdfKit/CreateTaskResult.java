@@ -1,11 +1,19 @@
 package com.example.demo.pojo.comPdfKit;
 
-import lombok.Data;
+
 
 /**
  * @author tangxiangan
  */
-@Data
+
 public class CreateTaskResult {
     private String taskId;
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 }

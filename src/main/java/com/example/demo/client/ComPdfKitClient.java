@@ -6,7 +6,8 @@ import com.example.demo.constant.CommonConstant;
 import com.example.demo.exception.BackendRuntimeException;
 import com.example.demo.pojo.comPdfKit.*;
 import com.example.demo.utils.JsonUtils;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.FileSystemResource;
@@ -30,8 +31,10 @@ import static java.time.Duration.*;
  * PaddleClient
  */
 
-@Slf4j
+
 public class ComPdfKitClient {
+
+    private Logger log = LoggerFactory.getLogger(ComPdfKitClient.class);
 
     private final String publicKey;
 
