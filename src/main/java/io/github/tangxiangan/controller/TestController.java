@@ -1,10 +1,10 @@
-package com.kdan.compdfkit.controller;
+package io.github.tangxiangan.controller;
 
 
-import com.kdan.compdfkit.client.ComPdfKitClient;
-import com.kdan.compdfkit.pojo.comPdfKit.CreateTaskResult;
-import com.kdan.compdfkit.pojo.comPdfKit.QueryTaskInfoResult;
-import com.kdan.compdfkit.utils.FileUtils;
+import io.github.tangxiangan.client.ComPdfKitClient;
+import io.github.tangxiangan.pojo.comPdfKit.CreateTaskResult;
+import io.github.tangxiangan.pojo.comPdfKit.QueryTaskInfoResult;
+import io.github.tangxiangan.utils.FileUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

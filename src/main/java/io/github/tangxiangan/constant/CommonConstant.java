@@ -1,4 +1,4 @@
-package com.kdan.compdfkit.constant;
+package io.github.tangxiangan.constant;
 
 public interface CommonConstant {
 

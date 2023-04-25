@@ -1,11 +1,11 @@
-package com.kdan.compdfkit.client;
+package io.github.tangxiangan.client;
 
 
-import com.kdan.compdfkit.constant.ComPdfKitConstant;
-import com.kdan.compdfkit.constant.CommonConstant;
-import com.kdan.compdfkit.exception.BackendRuntimeException;
-import com.kdan.compdfkit.pojo.comPdfKit.*;
-import com.kdan.compdfkit.utils.JsonUtils;
+import io.github.tangxiangan.constant.ComPdfKitConstant;
+import io.github.tangxiangan.constant.CommonConstant;
+import io.github.tangxiangan.exception.BackendRuntimeException;
+import io.github.tangxiangan.pojo.comPdfKit.*;
+import io.github.tangxiangan.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;

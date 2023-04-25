@@ -16,16 +16,13 @@
         <docker.path>src/main/docker</docker.path>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
          <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -56,9 +53,9 @@
     <name>compdf-kit-sdk</name>
     <description>compdf-kit-sdk</description>
     <groupId>io.github.tangxiangan</groupId>
-    <artifactId>compdf-kit-sdk</artifactId>
+    <artifactId>compdfkit-sdk-java</artifactId>
     <!--需要特别注意,你上传的是SNAPSHOT仓库,所以此处版本号后缀必须带SNAPSHOT-->
-    <version>0.0.2</version>
+    <version>0.0.6</version>
     <!--项目信息...-->
     <url>https://github.com/tangxiangan/test-saas-sdk</url>
 
@@ -227,22 +224,6 @@
     </profiles>
     <build>
         <finalName>test-saas-sdk</finalName>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 
 </project>

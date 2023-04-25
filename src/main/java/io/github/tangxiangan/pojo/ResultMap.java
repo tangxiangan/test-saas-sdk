@@ -1,7 +1,7 @@
-package com.kdan.compdfkit.pojo;
+package io.github.tangxiangan.pojo;
 
-import com.kdan.compdfkit.constant.CommonConstant;
-import com.kdan.compdfkit.utils.JsonUtils;
+import io.github.tangxiangan.constant.CommonConstant;
+import io.github.tangxiangan.utils.JsonUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 

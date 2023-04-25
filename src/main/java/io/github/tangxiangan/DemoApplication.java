@@ -1,4 +1,4 @@
-package com.kdan.compdfkit;
+package io.github.tangxiangan;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

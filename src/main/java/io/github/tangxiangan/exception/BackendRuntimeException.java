@@ -1,4 +1,4 @@
-package com.kdan.compdfkit.exception;
+package io.github.tangxiangan.exception;
 
 /**
  * @author tangxiangan

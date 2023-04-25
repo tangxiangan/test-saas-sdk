@@ -1,7 +1,7 @@
-package com.kdan.compdfkit.utils;
+package io.github.tangxiangan.utils;
 
 
-import com.kdan.compdfkit.pojo.ResultMap;
+import io.github.tangxiangan.pojo.ResultMap;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
