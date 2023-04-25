@@ -9,9 +9,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <!--gav信息-->
-
-    <name>demo</name>
-    <description>demo</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -56,10 +53,12 @@
     </dependencies>
 
 
+    <name>compdf-kit-sdk</name>
+    <description>compdf-kit-sdk</description>
     <groupId>io.github.tangxiangan</groupId>
     <artifactId>compdf-kit-sdk</artifactId>
     <!--需要特别注意,你上传的是SNAPSHOT仓库,所以此处版本号后缀必须带SNAPSHOT-->
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <!--项目信息...-->
     <url>https://github.com/tangxiangan/test-saas-sdk</url>
 
