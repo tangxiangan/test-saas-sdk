@@ -1,7 +1,7 @@
-package com.example.demo.utils;
+package com.kdan.compdfkit.utils;
 
 
-import com.example.demo.pojo.ResultMap;
+import com.kdan.compdfkit.pojo.ResultMap;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,15 +1,14 @@
-package com.example.demo.controller;
+package com.kdan.compdfkit.controller;
 
 
-import com.example.demo.client.ComPdfKitClient;
-import com.example.demo.pojo.comPdfKit.CreateTaskResult;
-import com.example.demo.pojo.comPdfKit.QueryTaskInfoResult;
-import com.example.demo.utils.FileUtils;
+import com.kdan.compdfkit.client.ComPdfKitClient;
+import com.kdan.compdfkit.pojo.comPdfKit.CreateTaskResult;
+import com.kdan.compdfkit.pojo.comPdfKit.QueryTaskInfoResult;
+import com.kdan.compdfkit.utils.FileUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.List;
 
 
 /**

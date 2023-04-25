@@ -1,14 +1,13 @@
-package com.example.demo.config;
+package com.kdan.compdfkit.config;
 
 
-import com.example.demo.constant.CommonConstant;
+import com.kdan.compdfkit.constant.CommonConstant;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.OAuthBuilder;

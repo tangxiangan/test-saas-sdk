@@ -1,7 +1,7 @@
-package com.example.demo.pojo;
+package com.kdan.compdfkit.pojo;
 
-import com.example.demo.constant.CommonConstant;
-import com.example.demo.utils.JsonUtils;
+import com.kdan.compdfkit.constant.CommonConstant;
+import com.kdan.compdfkit.utils.JsonUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 

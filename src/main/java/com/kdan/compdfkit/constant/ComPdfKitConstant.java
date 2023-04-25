@@ -1,4 +1,4 @@
-package com.example.demo.constant;
+package com.kdan.compdfkit.constant;
 
 /**
  * @author tangxiangan

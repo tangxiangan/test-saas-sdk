@@ -1,11 +1,12 @@
-package com.example.demo.client;
+package com.kdan.compdfkit.client;
 
 
-import com.example.demo.constant.ComPdfKitConstant;
-import com.example.demo.constant.CommonConstant;
-import com.example.demo.exception.BackendRuntimeException;
+import com.kdan.compdfkit.constant.ComPdfKitConstant;
+import com.kdan.compdfkit.constant.CommonConstant;
+import com.kdan.compdfkit.exception.BackendRuntimeException;
 import com.example.demo.pojo.comPdfKit.*;
-import com.example.demo.utils.JsonUtils;
+import com.kdan.compdfkit.pojo.comPdfKit.*;
+import com.kdan.compdfkit.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
