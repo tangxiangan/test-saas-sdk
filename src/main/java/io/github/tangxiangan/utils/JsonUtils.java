@@ -1,12 +1,11 @@
 package io.github.tangxiangan.utils;
 
 
-import io.github.tangxiangan.pojo.ResultMap;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.tangxiangan.pojo.ResultMap;
 import org.springframework.util.StringUtils;
-
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * JsonUtils
+ *
  * @author tangxiangan
  */
 public class JsonUtils {
@@ -32,7 +33,8 @@ public class JsonUtils {
     /**
      * 将对象转换成JSON字符串
      *
-     * @param bean 可以为基本的object 或者为 数组
+     * @param bean       可以为基本的object 或者为 数组
+     * @param dateFormat 转换格式
      * @return JSON字符串
      */
     public static String getJsonString(Object bean, DateFormat dateFormat) {
@@ -48,10 +50,10 @@ public class JsonUtils {
 
     /**
      * 将json格式的字符串的转化为Bean对象
-     *
-     * @param <T> t
-     * @param jsonStr  jsonStr
-     * @param clazz 类
+     * @param <T>   t
+     * @param jsonStr    jsonStr
+     * @param clazz      类
+     * @param dateFormat 日期格式
      * @return 对象
      */
     public static <T> T jsonStringToBean(String jsonStr, Class<T> clazz, DateFormat dateFormat) {
@@ -86,7 +88,7 @@ public class JsonUtils {
      *
      * @param <T>   t
      * @param jsonArrStr json
-     * @param clazz      List中对象类型
+     * @param clazz   t
      * @return list
      */
     public static <T> List<T> jsonStringToList(String jsonArrStr, Class<T> clazz) {
@@ -96,9 +98,10 @@ public class JsonUtils {
     /**
      * 将json格式的字符串（数组形式）的转化为List对象
      *
-     * @param <T> 对象
+     * @param <T>   t
      * @param jsonArrStr 数组
      * @param clazz      List中对象类型
+     * @param dateFormat 日期格式
      * @return list
      */
     public static <T> List<T> jsonStringToList(String jsonArrStr, Class<T> clazz, DateFormat dateFormat) {

@@ -19,7 +19,7 @@ public class FileUtils {
     public static File multipartFileToFile(MultipartFile file) {
         File toFile = null;
         try {
-        if (file.equals("") || file.getSize() <= 0) {
+        if (file.getSize() <= 0) {
             file = null;
         } else {
             InputStream ins = null;

@@ -22,7 +22,15 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83_noneautotype</version>
+        </dependency>
          <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -149,9 +157,9 @@
                         <version>3.0.1</version>
                         <configuration>
 <!--                            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>-->
-                            <additionalJOptions>
-                                <additionalJOption>-Xdoclint:none</additionalJOption>
-                            </additionalJOptions>
+<!--                            <additionalJOptions>-->
+<!--                                <additionalJOption>-Xdoclint:none</additionalJOption>-->
+<!--                            </additionalJOptions>-->
                         </configuration>
                         <executions>
                             <execution>

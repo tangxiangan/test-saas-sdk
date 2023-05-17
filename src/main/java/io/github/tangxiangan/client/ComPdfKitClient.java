@@ -1,9 +1,11 @@
 package io.github.tangxiangan.client;
 
 
+import com.alibaba.fastjson.JSON;
 import io.github.tangxiangan.constant.ComPdfKitConstant;
 import io.github.tangxiangan.constant.CommonConstant;
 import io.github.tangxiangan.exception.BackendRuntimeException;
+import io.github.tangxiangan.param.FileParameter;
 import io.github.tangxiangan.pojo.comPdfKit.*;
 import io.github.tangxiangan.utils.JsonUtils;
 import org.slf4j.Logger;
@@ -15,26 +17,25 @@ import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static java.time.Duration.*;
+import static java.time.Duration.ofSeconds;
 
 /**
  * @author txa 2023/1/16
- * <p>
- * PaddleClient
+ * ComPdfKitClient
  */
 
 
 public class ComPdfKitClient {
 
-    private Logger log = LoggerFactory.getLogger(ComPdfKitClient.class);
+    private final Logger log = LoggerFactory.getLogger(ComPdfKitClient.class);
 
     private final String publicKey;
 
@@ -44,9 +45,6 @@ public class ComPdfKitClient {
 
     private static long expireTime;
 
-    /**
-     * 地址
-     */
     private final String address;
     private final RestTemplate restTemplate;
 
@@ -67,21 +65,6 @@ public class ComPdfKitClient {
         // 调用 API 刷新 Token
         ComPdfKitOauthResult newToken = getComPdfKitAuth(this.publicKey,this.secretKey);
         setAccessToken(newToken.getAccessToken(), Long.parseLong(newToken.getExpiresIn()));
-
-    }
-
-
-
-    private ComPdfKitClient(String publicKey, String secretKey, Duration readTimeout, Duration connectTimeout) {
-        this.address = "http://101.132.103.13:8090/server/";
-        this.publicKey = publicKey;
-        this.secretKey = secretKey;
-        this.restTemplate = new RestTemplateBuilder()
-                .setReadTimeout(readTimeout)
-                .setConnectTimeout(connectTimeout)
-                .setBufferRequestBody(false)
-                .build();
-        refreshAccessToken();
     }
 
     public ComPdfKitClient(String publicKey, String secretKey) {
@@ -128,8 +111,6 @@ public class ComPdfKitClient {
         if (responseEntity.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(responseEntity.getBody())) {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_GET_TOKEN_FAIL);
         }
-        // 设置过期
-        // redisUtils.set(ComPDFKitConstant.COM_PDF_Kit_TOKEN, token, responseEntity.getBody().get(ComPDFKitConstant.EXPIRES_IN).asLong()-20L);
         return responseEntity.getBody().getData();
     }
 
@@ -178,18 +159,66 @@ public class ComPdfKitClient {
      * @param password 密码
      * @return UploadFileResult
      */
-    public UploadFileResult uploadFile(File file, String taskId, String password)  {
-        log.info("开始上传文件，taskId：{},password:{}",taskId,password);
+    public UploadFileResult uploadFile(File file, String taskId, String password) {
+        return getUploadFileResult(file, taskId, password, null);
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param file   文件
+     * @param taskId 任务id
+     * @return UploadFileResult
+     */
+    public UploadFileResult uploadFile(File file, String taskId) {
+        return getUploadFileResult(file, taskId, null, null);
+    }
+
+    /**
+     * 上传文件
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param password      密码
+     * @param fileParameter 文件参数
+     * @return UploadFileResult
+     */
+    public UploadFileResult uploadFile(File file, String taskId, String password, FileParameter fileParameter) {
+        return getUploadFileResult(file, taskId, password, fileParameter);
+    }
+
+    /**
+     * uploadFile
+     *
+     * @param file          file
+     * @param taskId        taskId
+     * @param fileParameter fileParameter
+     * @return UploadFileResult
+     */
+    public UploadFileResult uploadFile(File file, String taskId, FileParameter fileParameter) {
+        return getUploadFileResult(file, taskId, null, fileParameter);
+    }
+
+
+    private UploadFileResult getUploadFileResult(File file, String taskId, String password, FileParameter fileParameter) {
+        log.info("开始上传文件，taskId：{},password:{}", taskId, password);
         String url = address.concat(ComPdfKitConstant.API_V1_UPLOAD_FILE);
-        MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();;
+        MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
         FileSystemResource fs = new FileSystemResource(file);
         param.add("file", fs);
         param.add("taskId", taskId);
-        param.add("password", password);
-        HttpHeaders headers = basicHeaders() ;
+        if (!StringUtils.isEmpty(password)) {
+            param.add("password", password);
+        }
+        if (!ObjectUtils.isEmpty(fileParameter)) {
+            param.add("parameter", JSON.toJSONString(fileParameter));
+        }
+        HttpHeaders headers = basicHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         ResponseEntity<ComPdfKitResult<UploadFileResult>> response = null;
-        ParameterizedTypeReference<ComPdfKitResult<UploadFileResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<UploadFileResult>>() {};
+        ParameterizedTypeReference<ComPdfKitResult<UploadFileResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<UploadFileResult>>() {
+        };
         try {
             response = restTemplate.exchange(
                     url,
@@ -209,12 +238,12 @@ public class ComPdfKitClient {
                 log.error("删除文件失败；{}",e.getMessage());
             }
         }
-
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) || ObjectUtils.isEmpty(response.getBody())) {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL+ Objects.requireNonNull(response.getBody()).getMsg());
         }
         return response.getBody().getData();
     }
+
 
     /**
      * 执行任务转档
