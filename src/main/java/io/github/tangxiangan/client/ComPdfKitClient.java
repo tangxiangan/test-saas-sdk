@@ -68,7 +68,7 @@ public class ComPdfKitClient {
     }
 
     public ComPdfKitClient(String publicKey, String secretKey) {
-        this.address = "http://101.132.103.13:8090/server/";
+        this.address = "https://api-server.compdf.com/server/";
         this.publicKey = publicKey;
         this.secretKey = secretKey;
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
@@ -122,6 +122,119 @@ public class ComPdfKitClient {
         return headers;
     }
 
+
+    /**
+     * get Support tools
+     *
+     * @return ToolSupportResult
+     */
+    public ToolSupportResult queryTools() {
+        String url = address.concat(ComPdfKitConstant.API_V1_TOOL_SUPPORT);
+        ResponseEntity<ComPdfKitResult<ToolSupportResult>> response;
+        ParameterizedTypeReference<ComPdfKitResult<ToolSupportResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<ToolSupportResult>>() {};
+        try {
+            response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    null,
+                    typeRef
+            );
+        } catch (Exception e) {
+            log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + "{}", e.getMessage());
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + e.getMessage());
+        }
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL);
+        }
+        return response.getBody().getData();
+    }
+
+    /**
+     * get file info
+     *
+     * @param fileKey fileKey
+     * @return FileInfo
+     */
+    public FileInfo queryFileInfo(String fileKey) {
+        String url = address.concat(ComPdfKitConstant.API_V1_FILE_INFO).concat("?fileKey=").concat(fileKey);
+        ResponseEntity<ComPdfKitResult<FileInfo>> response;
+        ParameterizedTypeReference<ComPdfKitResult<FileInfo>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<FileInfo>>() {};
+        try {
+            response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(basicHeaders()),
+                    typeRef
+            );
+        } catch (Exception e) {
+            log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + "{}", e.getMessage());
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + e.getMessage());
+        }
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL);
+        }
+        return response.getBody().getData();
+    }
+
+    /**
+     * queryAssetInfo
+     *
+     * @return QueryTenantAssetResult
+     */
+    public QueryTenantAssetResult queryAssetInfo() {
+        String url = address.concat(ComPdfKitConstant.API_V1_ASSET_INFO);
+        ResponseEntity<ComPdfKitResult<QueryTenantAssetResult>> response;
+        ParameterizedTypeReference<ComPdfKitResult<QueryTenantAssetResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<QueryTenantAssetResult>>() {};
+        try {
+            response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(basicHeaders()),
+                    typeRef
+            );
+        } catch (Exception e) {
+            log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + "{}", e.getMessage());
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + e.getMessage());
+        }
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL);
+        }
+        return response.getBody().getData();
+    }
+
+    /**
+     * queryTaskList
+     *
+     * @param page page
+     * @param size size
+     * @return QueryTaskRecordsResult
+     */
+    public QueryTaskRecordsResult queryTaskList(String page, String size) {
+        if(StringUtils.isEmpty(page)){
+            page = "1";
+        }
+        if(StringUtils.isEmpty(size)){
+            size = "5";
+        }
+        String url = address.concat(ComPdfKitConstant.API_V1_TASK_LIST).concat("?page=").concat(page).concat("&size=").concat(size);
+        ResponseEntity<ComPdfKitResult<QueryTaskRecordsResult>> response;
+        ParameterizedTypeReference<ComPdfKitResult<QueryTaskRecordsResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<QueryTaskRecordsResult>>() {};
+        try {
+            response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(basicHeaders()),
+                    typeRef
+            );
+        } catch (Exception e) {
+            log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL + "{}", e.getMessage());
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL + e.getMessage());
+        }
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL);
+        }
+        return response.getBody().getData();
+    }
 
 
     /**
@@ -300,5 +413,7 @@ public class ComPdfKitClient {
         log.info("Query status succeeded: {}",JsonUtils.getJsonString(response.getBody().getData()));
         return response.getBody().getData();
     }
+
+
 
 }

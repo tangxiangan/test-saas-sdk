@@ -9,6 +9,13 @@ public interface ComPdfKitConstant {
 
     String API_V1_CREATE_TASK = "v1/task/{executeTypeUrl}";
 
+    String API_V1_TOOL_SUPPORT = "v1/tool/support";
+
+    String API_V1_FILE_INFO = "v1/tool/support";
+
+    String API_V1_ASSET_INFO = "v1/asset/info";
+    String API_V1_TASK_LIST = "v1/task/list";
+
     String API_V1_UPLOAD_FILE = "v1/file/upload";
 
     String API_V1_EXECUTE_TASK = "v1/execute/start";
@@ -26,4 +33,8 @@ public interface ComPdfKitConstant {
     String EXCEPTION_MSG_EXECUTE_TASK_FAIL = "Saas file conversion failed";
 
     String EXCEPTION_MSG_TASK_INFO_FAIL = "Failed to query saas file status";
+    String EXCEPTION_MSG_QUERY_FILE_INFO_FAIL = "Saas query file info failed";
+    String EXCEPTION_MSG_QUERY_TOOLS_FAIL = "Saas query tools  failed";
+    String EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL = "Saas query tenant asset failed";
+    String EXCEPTION_MSG_QUERY_TASK_LIST_FAIL = "";
 }

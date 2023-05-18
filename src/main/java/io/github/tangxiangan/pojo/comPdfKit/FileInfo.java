@@ -2,7 +2,7 @@ package io.github.tangxiangan.pojo.comPdfKit;
 
 
 
-public class FileInfoDTO {
+public class FileInfo {
 
     /**
      * file unique identifier
@@ -74,6 +74,18 @@ public class FileInfoDTO {
      */
     private String downFileName;
 
+    /**
+     * fileParameter
+     */
+    private String fileParameter;
+
+    public String getFileParameter() {
+        return fileParameter;
+    }
+
+    public void setFileParameter(String fileParameter) {
+        this.fileParameter = fileParameter;
+    }
 
     public String getFileKey() {
         return fileKey;

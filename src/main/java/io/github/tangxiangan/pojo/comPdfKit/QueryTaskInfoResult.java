@@ -56,7 +56,7 @@ public class QueryTaskInfoResult {
     /**
      * fileInfoDTOList
      */
-    private List<FileInfoDTO> fileInfoDTOList;
+    private List<FileInfo> fileInfoList;
 
     public String getTaskId() {
         return taskId;
@@ -146,11 +146,11 @@ public class QueryTaskInfoResult {
         this.callbackUrl = callbackUrl;
     }
 
-    public List<FileInfoDTO> getFileInfoDTOList() {
-        return fileInfoDTOList;
+    public List<FileInfo> getFileInfoDTOList() {
+        return fileInfoList;
     }
 
-    public void setFileInfoDTOList(List<FileInfoDTO> fileInfoDTOList) {
-        this.fileInfoDTOList = fileInfoDTOList;
+    public void setFileInfoDTOList(List<FileInfo> fileInfoList) {
+        this.fileInfoList = fileInfoList;
     }
 }
