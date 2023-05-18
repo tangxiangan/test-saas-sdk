@@ -9,22 +9,22 @@ import lombok.Data;
 public class PageInsertParameter extends FileParameter {
 
     /**
-     * 页码
+     * page number
      */
     private String targetPage;
 
     /**
-     * 页面宽度（默认595）
+     * Page width (default 595)
      */
     private String width;
 
     /**
-     * 页面高度（842）
+     * page height (842)
      */
     private String height;
 
     /**
-     * 插入页面数（默认1）
+     * Number of pages to insert (default 1)
      */
     private String number;
 

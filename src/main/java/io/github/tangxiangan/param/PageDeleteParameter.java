@@ -12,16 +12,8 @@ import java.util.List;
 public class PageDeleteParameter extends FileParameter {
 
     /**
-     * 输入文件页码
+     * Enter document page number
      */
     private List<String> pagesList;
-    /**
-     * 输入文件
-     */
-    private File inputFile;
-    /**
-     * 输入文件的密码（可选）
-     */
-    private String password;
 
 }

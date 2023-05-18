@@ -18,17 +18,8 @@ public enum PDFServerEnum {
     DELETE("pdf/delete"),
     EXTRACT("pdf/extract"),
     ROTATION("pdf/rotation"),
-    /**
-     * 插入页面
-     */
     INSERT("pdf/insert"),
-    /**
-     * 增加水印
-     */
     ADD_WATERMARK("pdf/addWatermark"),
-    /**
-     * 删除水印
-     */
     DEL_WATERMARK("pdf/delWatermark");
 
     private final String value;

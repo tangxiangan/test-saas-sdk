@@ -10,51 +10,51 @@ import java.util.List;
 public class QueryTaskInfoResult {
 
     /**
-     * 任务id
+     * taskId
      */
     private String taskId;
     /**
-     * 任务文件个数
+     * taskFileNum
      */
     private Integer taskFileNum;
     /**
-     * 成功个数
+     * taskSuccessNum
      */
     private String taskSuccessNum;
     /**
-     * 失败个数
+     * taskFailNum
      */
     private String taskFailNum;
     /**
-     * 任务状态
+     * taskStatus
      */
     private String taskStatus;
     /**
-     * 使用资产类型
+     * assetTypeId
      */
     private String assetTypeId;
     /**
-     * 任务费用
+     * taskCost
      */
     private String taskCost;
     /**
-     * 任务持续时间
+     * taskTime
      */
     private Long taskTime;
     /**
-     * 源文件格式
+     * sourceType
      */
     private String sourceType;
     /**
-     * 目标文件格式
+     * targetType
      */
     private String targetType;
     /**
-     * 回调地址
+     * callbackUrl
      */
     private String callbackUrl;
     /**
-     * 任务文件信息
+     * fileInfoDTOList
      */
     private List<FileInfoDTO> fileInfoDTOList;
 

@@ -9,7 +9,7 @@ import lombok.Data;
 public class PDFCompressParameter extends FileParameter {
 
     /**
-     * 压缩比例 0-100
+     * Compression ratio 0-100
      */
     String quality;
 

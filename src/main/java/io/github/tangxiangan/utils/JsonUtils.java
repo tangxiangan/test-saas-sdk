@@ -21,21 +21,21 @@ public class JsonUtils {
     private final static SimpleDateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
-     * 将对象转换成JSON字符串
+     * getJsonString
      *
-     * @param bean 可以为基本的object 或者为 数组
-     * @return JSON字符串
+     * @param bean Can be a basic object or an array
+     * @return String
      */
     public static String getJsonString(Object bean) {
         return getJsonString(bean, DEFAULT_FORMAT);
     }
 
     /**
-     * 将对象转换成JSON字符串
+     * Convert object to JSON string
      *
-     * @param bean       可以为基本的object 或者为 数组
-     * @param dateFormat 转换格式
-     * @return JSON字符串
+     * @param bean       Can be a basic object or an array
+     * @param dateFormat convert format
+     * @return String
      */
     public static String getJsonString(Object bean, DateFormat dateFormat) {
         ObjectMapper mapper = new ObjectMapper();
@@ -44,96 +44,6 @@ public class JsonUtils {
         try {
             return mapper.writeValueAsString(bean);
         } catch (Exception e) {
-            return null;
-        }
-    }
-
-    /**
-     * 将json格式的字符串的转化为Bean对象
-     * @param <T>   t
-     * @param jsonStr    jsonStr
-     * @param clazz      类
-     * @param dateFormat 日期格式
-     * @return 对象
-     */
-    public static <T> T jsonStringToBean(String jsonStr, Class<T> clazz, DateFormat dateFormat) {
-        if (StringUtils.isEmpty(jsonStr)) {
-            return null;
-        }
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            mapper.setDateFormat(dateFormat);
-            return mapper.readValue(jsonStr, clazz);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * 将json格式的字符串的转化为Bean对象
-     *
-     * @param <T> 泛型
-     * @param jsonStr json
-     * @param clazz 类
-     * @return T
-     */
-    public static <T> T jsonStringToBean(String jsonStr, Class<T> clazz) {
-        return jsonStringToBean(jsonStr, clazz, DEFAULT_FORMAT);
-    }
-
-    /**
-     * 将json格式的字符串（数组形式）的转化为List对象
-     *
-     * @param <T>   t
-     * @param jsonArrStr json
-     * @param clazz   t
-     * @return list
-     */
-    public static <T> List<T> jsonStringToList(String jsonArrStr, Class<T> clazz) {
-        return jsonStringToList(jsonArrStr, clazz, DEFAULT_FORMAT);
-    }
-
-    /**
-     * 将json格式的字符串（数组形式）的转化为List对象
-     *
-     * @param <T>   t
-     * @param jsonArrStr 数组
-     * @param clazz      List中对象类型
-     * @param dateFormat 日期格式
-     * @return list
-     */
-    public static <T> List<T> jsonStringToList(String jsonArrStr, Class<T> clazz, DateFormat dateFormat) {
-        if (StringUtils.isEmpty(jsonArrStr)) {
-            return new ArrayList<>();
-        }
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.setDateFormat(dateFormat);
-            JavaType javaType = mapper.getTypeFactory().constructParametricType(List.class, clazz);
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            return mapper.readValue(jsonArrStr, javaType);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-
-    public static <T> ResultMap<T> jsonStringToResultMap(String jsonArrStr, Class<T> clazz) {
-        if (StringUtils.isEmpty(jsonArrStr)) {
-            return new ResultMap<>();
-        }
-
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.setDateFormat(DEFAULT_FORMAT);
-            JavaType javaType = mapper.getTypeFactory().constructParametricType(ResultMap.class, clazz);
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            return mapper.readValue(jsonArrStr, javaType);
-        } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

@@ -12,20 +12,12 @@ import java.util.List;
 public class PageRotationParameter extends FileParameter {
 
     /**
-     * 输入文件页码
+     * Enter file page number
      */
     private List<String> pagesList;
-    /**
-     * 输入文件
-     */
-    private File inputFile;
-    /**
-     * 输入文件的密码（可选）
-     */
-    private String password;
 
     /**
-     * 旋转的角度 0 90 180 270
+     * Rotation angle 0 90 180 270
      */
     private String rotation;
 

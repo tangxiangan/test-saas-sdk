@@ -5,72 +5,72 @@ package io.github.tangxiangan.pojo.comPdfKit;
 public class FileInfoDTO {
 
     /**
-     * 文件唯一标识
+     * file unique identifier
      */
     private String fileKey;
 
     /**
-     * 任务id
+     * taskId
      */
     private String taskId;
 
     /**
-     * 文件名
+     * fileName
      */
     private String fileName;
 
     /**
-     * 源文件地址
+     * fileUrl
      */
     private String fileUrl;
 
     /**
-     * 转档下载地址
+     * downloadUrl
      */
     private String downloadUrl;
 
     /**
-     * 源文件格式
+     * sourceType
      */
     private String sourceType;
 
     /**
-     * 目标文件格式
+     * targetType
      */
     private String targetType;
 
     /**
-     * 文件大小
+     * fileSize
      */
     private String fileSize;
 
     /**
-     * 转档后文件大小
+     * convertSize
      */
     private String convertSize;
 
     /**
-     * 转换消耗时间
+     * convertTime
      */
     private String convertTime;
 
     /**
-     * 状态
+     * status
      */
     private String status;
 
     /**
-     * 失败原因编码
+     * failureCode
      */
     private String failureCode;
 
     /**
-     * 失败原因
+     * failureReason
      */
     private String failureReason;
 
     /**
-     * 下载后文件名
+     * downFileName
      */
     private String downFileName;
 

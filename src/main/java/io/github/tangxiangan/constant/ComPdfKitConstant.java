@@ -17,13 +17,13 @@ public interface ComPdfKitConstant {
 
     String COM_PDF_KIT_TOKEN = "ComPDFKit_AccessToken";
 
-    String EXCEPTION_MSG_GET_TOKEN_FAIL = "获取ComPDFKit Token 失败";
+    String EXCEPTION_MSG_GET_TOKEN_FAIL = "Failed to get ComPDFKit Token";
 
-    String EXCEPTION_MSG_CREATE_TASK_FAIL = "saas创建任务失败";
+    String EXCEPTION_MSG_CREATE_TASK_FAIL = "Saas task creation failed";
 
-    String EXCEPTION_MSG_UPLOAD_FILE_FAIL = "saas上传文件失败";
+    String EXCEPTION_MSG_UPLOAD_FILE_FAIL = "Saas upload file failed";
 
-    String EXCEPTION_MSG_EXECUTE_TASK_FAIL = "saas文件转档失败";
+    String EXCEPTION_MSG_EXECUTE_TASK_FAIL = "Saas file conversion failed";
 
-    String EXCEPTION_MSG_TASK_INFO_FAIL = "查询saas文件状态失败";
+    String EXCEPTION_MSG_TASK_INFO_FAIL = "Failed to query saas file status";
 }

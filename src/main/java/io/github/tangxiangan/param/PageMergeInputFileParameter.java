@@ -12,12 +12,7 @@ import java.util.List;
 public class PageMergeInputFileParameter {
 
     /**
-     * 输入文件
-     */
-    private File inputFile;
-
-    /**
-     * 文件页码
+     * file page number
      */
     private List<String> filePages;
 }

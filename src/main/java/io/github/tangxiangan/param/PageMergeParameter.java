@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class PageMergeParameter extends FileParameter {
     /**
-     * 输入文件以及页码
+     * file page number
      */
-    private List<PageMergeInputFileParameter> inputFileDTOList;
+    private List<String> filePages;
 
 }

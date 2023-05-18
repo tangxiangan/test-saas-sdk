@@ -62,7 +62,7 @@ public class ComPdfKitClient {
     }
 
     private void refreshAccessToken() {
-        // 调用 API 刷新 Token
+        // Call the API to refresh the token
         ComPdfKitOauthResult newToken = getComPdfKitAuth(this.publicKey,this.secretKey);
         setAccessToken(newToken.getAccessToken(), Long.parseLong(newToken.getExpiresIn()));
     }
@@ -83,10 +83,10 @@ public class ComPdfKitClient {
 
 
     /**
-     * 获取token
+     * get token
      *
-     * @param publicKey 项目key
-     * @param secretKey  秘钥
+     * @param publicKey publicKey
+     * @param secretKey  secretKey
      * @return String
      */
     private ComPdfKitOauthResult getComPdfKitAuth(String publicKey, String secretKey) {
@@ -125,9 +125,9 @@ public class ComPdfKitClient {
 
 
     /**
-     * 创建任务
+     * createTask
      *
-     * @param executeTypeUrl 任务执行类型
+     * @param executeTypeUrl task execution type
      * @return CreateTaskResult
      */
     public CreateTaskResult createTask(String executeTypeUrl) {
@@ -152,11 +152,11 @@ public class ComPdfKitClient {
     }
 
     /**
-     * 上传文件
+     * uploadFile
      *
-     * @param file     文件
-     * @param taskId   任务id
-     * @param password 密码
+     * @param file     file
+     * @param taskId   taskId
+     * @param password password
      * @return UploadFileResult
      */
     public UploadFileResult uploadFile(File file, String taskId, String password) {
@@ -164,10 +164,10 @@ public class ComPdfKitClient {
     }
 
     /**
-     * 上传文件
+     * uploadFile
      *
-     * @param file   文件
-     * @param taskId 任务id
+     * @param file   file
+     * @param taskId taskId
      * @return UploadFileResult
      */
     public UploadFileResult uploadFile(File file, String taskId) {
@@ -175,13 +175,12 @@ public class ComPdfKitClient {
     }
 
     /**
-     * 上传文件
      * uploadFile
      *
      * @param file          file
      * @param taskId        taskId
-     * @param password      密码
-     * @param fileParameter 文件参数
+     * @param password      password
+     * @param fileParameter fileParameter
      * @return UploadFileResult
      */
     public UploadFileResult uploadFile(File file, String taskId, String password, FileParameter fileParameter) {
@@ -202,7 +201,7 @@ public class ComPdfKitClient {
 
 
     private UploadFileResult getUploadFileResult(File file, String taskId, String password, FileParameter fileParameter) {
-        log.info("开始上传文件，taskId：{},password:{}", taskId, password);
+        log.info("Start uploading files, task Id: {}, password: {}", taskId, password);
         String url = address.concat(ComPdfKitConstant.API_V1_UPLOAD_FILE);
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
         FileSystemResource fs = new FileSystemResource(file);
@@ -235,7 +234,7 @@ public class ComPdfKitClient {
                     boolean delete = file.delete();
                 }
             }catch (Exception e){
-                log.error("删除文件失败；{}",e.getMessage());
+                log.error("Failed to delete file; {}",e.getMessage());
             }
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) || ObjectUtils.isEmpty(response.getBody())) {
@@ -246,13 +245,13 @@ public class ComPdfKitClient {
 
 
     /**
-     * 执行任务转档
+     * executeTask
      *
-     * @param taskId 任务id
-     * @return 任务id
+     * @param taskId taskId
+     * @return CreateTaskResult
      */
     public CreateTaskResult executeTask(String taskId){
-        log.info("开始执行任务转档，taskId：{}",taskId);
+        log.info("Start executing task transfer, taskId: {}",taskId);
         String url = address.concat(ComPdfKitConstant.API_V1_EXECUTE_TASK).concat("?taskId=").concat(taskId);
         ResponseEntity<ComPdfKitResult<CreateTaskResult>> response;
         ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>> result = new ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>>(){};
@@ -274,13 +273,13 @@ public class ComPdfKitClient {
     }
 
     /**
-     * 查询任务文件状态
+     * Query task file status
      *
-     * @param taskId 任务id
+     * @param taskId taskId
      * @return QueryTaskInfoResult
      */
     public QueryTaskInfoResult queryTaskInfo(String taskId){
-        log.info("开始查询转档状态，taskId：{}",taskId);
+        log.info("Start to query the transfer status, taskId: {}",taskId);
         String url = address.concat(ComPdfKitConstant.API_V1_TASK_INFO).concat("?taskId=").concat(taskId);
         ResponseEntity<ComPdfKitResult<QueryTaskInfoResult>> response;
         ParameterizedTypeReference<ComPdfKitResult<QueryTaskInfoResult>> result = new ParameterizedTypeReference<ComPdfKitResult<QueryTaskInfoResult>>(){};
@@ -298,7 +297,7 @@ public class ComPdfKitClient {
         if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) || ObjectUtils.isEmpty(response.getBody().getData())){
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_TASK_INFO_FAIL+response.getBody());
         }
-        log.info("查询状态成功：{}",JsonUtils.getJsonString(response.getBody().getData()));
+        log.info("Query status succeeded: {}",JsonUtils.getJsonString(response.getBody().getData()));
         return response.getBody().getData();
     }
 

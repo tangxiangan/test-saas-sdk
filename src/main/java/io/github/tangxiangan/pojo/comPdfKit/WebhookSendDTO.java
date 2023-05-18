@@ -19,23 +19,23 @@ public class WebhookSendDTO implements Serializable {
      */
     private Long projectId;
     /**
-     * webhook发送地址
+     * webhookUrl
      */
     private String webhookUrl;
     /**
-     * 事件位置名称
+     * eventName
      */
     private String eventName;
     /**
-     * webhook发送token标识
+     * webhookToken
      */
     private String webhookToken;
     /**
-     * 发生时间
+     * sendTime
      */
     private Date sendTime;
     /**
-     * 产生本次事件的对象
+     * eventObject
      */
     private Object eventObject;
 

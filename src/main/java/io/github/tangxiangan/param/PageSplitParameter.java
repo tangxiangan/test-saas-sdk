@@ -12,12 +12,8 @@ import java.util.List;
 public class PageSplitParameter extends FileParameter {
 
     /**
-     * 输入文件页码
+     * Enter file page number
      */
     private List<String> pagesList;
-    /**
-     * 输入文件
-     */
-    private File inputFile;
 
 }

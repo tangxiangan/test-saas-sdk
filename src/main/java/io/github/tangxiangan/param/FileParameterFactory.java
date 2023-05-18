@@ -33,7 +33,6 @@ public class FileParameterFactory {
                 clazz = (Class<T>) PageMergeParameter.class;
                 fileParameter = new PageMergeParameter();
                 break;
-            //TODO 定义其他类型的转档参数对象
             case COMPRESS:
                 clazz = (Class<T>) PDFCompressParameter.class;
                 fileParameter = new PDFCompressParameter();

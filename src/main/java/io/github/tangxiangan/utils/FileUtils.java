@@ -6,13 +6,13 @@ import java.io.*;
 
 /**
  * @author tangxiangan
- * file工具类
+ * file tool class
  */
 public class FileUtils {
 
 
     /**
-     * 转换文件
+     * multipartFileToFile
      * @param file file
      * @return File
      */
@@ -34,7 +34,7 @@ public class FileUtils {
         return toFile;
     }
 
-    //获取流文件
+    //get flow file
     private static void inputStreamToFile(InputStream ins, File file) {
         try {
             OutputStream os = new FileOutputStream(file);
