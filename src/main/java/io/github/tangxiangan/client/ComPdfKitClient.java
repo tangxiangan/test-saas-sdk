@@ -108,8 +108,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_GET_TOKEN_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_GET_TOKEN_FAIL);
         }
-        if (responseEntity.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(responseEntity.getBody())) {
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_GET_TOKEN_FAIL);
+        if (responseEntity.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(responseEntity.getBody()) || !responseEntity.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_GET_TOKEN_FAIL + responseEntity.getBody());
         }
         return responseEntity.getBody().getData();
     }
@@ -143,8 +143,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL);
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + response.getBody());
         }
         return response.getBody().getData();
     }
@@ -170,8 +170,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL);
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE) ){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + response.getBody());
         }
         return response.getBody().getData();
     }
@@ -196,8 +196,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL);
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + response.getBody());
         }
         return response.getBody().getData();
     }
@@ -230,8 +230,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL);
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL+response.getBody());
         }
         return response.getBody().getData();
     }
@@ -258,8 +258,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_CREATE_TASK_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_CREATE_TASK_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() )){
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_CREATE_TASK_FAIL);
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_CREATE_TASK_FAIL+response.getBody());
         }
         return response.getBody().getData();
     }
@@ -350,8 +350,8 @@ public class ComPdfKitClient {
                 log.error("Failed to delete file; {}",e.getMessage());
             }
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) || ObjectUtils.isEmpty(response.getBody())) {
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL+ Objects.requireNonNull(response.getBody()).getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())) {
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL+response.getBody());
         }
         return response.getBody().getData();
     }
@@ -379,8 +379,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_EXECUTE_TASK_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_EXECUTE_TASK_FAIL + e.getMessage());
         }
-        if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) || ObjectUtils.isEmpty(response.getBody())){
-            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_EXECUTE_TASK_FAIL+response.getBody());
+        if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) ){
+            throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_EXECUTE_TASK_FAIL + response.getBody());
         }
         return response.getBody().getData();
     }
@@ -407,7 +407,7 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_TASK_INFO_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_TASK_INFO_FAIL + e.getMessage());
         }
-        if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) || ObjectUtils.isEmpty(response.getBody().getData())){
+        if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())){
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_TASK_INFO_FAIL+response.getBody());
         }
         log.info("Query status succeeded: {}",JsonUtils.getJsonString(response.getBody().getData()));
