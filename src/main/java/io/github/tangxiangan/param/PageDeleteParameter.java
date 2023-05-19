@@ -14,6 +14,6 @@ public class PageDeleteParameter extends FileParameter {
     /**
      * Enter document page number
      */
-    private List<String> pagesList;
+    private List<String> pageOptions;
 
 }

@@ -12,6 +12,6 @@ public class PageMergeParameter extends FileParameter {
     /**
      * file page number
      */
-    private List<String> filePages;
+    private List<String> pageOptions;
 
 }

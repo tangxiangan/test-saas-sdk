@@ -14,6 +14,6 @@ public class PageSplitParameter extends FileParameter {
     /**
      * Enter file page number
      */
-    private List<String> pagesList;
+    private List<String> pageOptions;
 
 }

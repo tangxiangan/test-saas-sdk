@@ -8,6 +8,7 @@ import io.github.tangxiangan.exception.BackendRuntimeException;
 import io.github.tangxiangan.param.FileParameter;
 import io.github.tangxiangan.pojo.comPdfKit.*;
 import io.github.tangxiangan.utils.JsonUtils;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -109,7 +110,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_GET_TOKEN_FAIL);
         }
         if (responseEntity.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(responseEntity.getBody()) || !responseEntity.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
-            throw new BackendRuntimeException(responseEntity.getBody().getCode(),  responseEntity.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(responseEntity.getBody().getCode()) ,  responseEntity.getBody().getMsg());
         }
         return responseEntity.getBody().getData();
     }
@@ -144,7 +145,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + e.getMessage());
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -171,7 +172,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + e.getMessage());
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE) ){
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -197,7 +198,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + e.getMessage());
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -231,7 +232,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL + e.getMessage());
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -259,7 +260,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_CREATE_TASK_FAIL + e.getMessage());
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -351,7 +352,7 @@ public class ComPdfKitClient {
             }
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())) {
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -380,7 +381,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_EXECUTE_TASK_FAIL + e.getMessage());
         }
         if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) ){
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -408,7 +409,7 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_TASK_INFO_FAIL + e.getMessage());
         }
         if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())){
-            throw new BackendRuntimeException(response.getBody().getCode(),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
         }
         log.info("Query status succeeded: {}",JsonUtils.getJsonString(response.getBody().getData()));
         return response.getBody().getData();

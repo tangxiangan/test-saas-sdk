@@ -14,7 +14,7 @@ public class PageRotationParameter extends FileParameter {
     /**
      * Enter file page number
      */
-    private List<String> pagesList;
+    private List<String> pageOptions;
 
     /**
      * Rotation angle 0 90 180 270
