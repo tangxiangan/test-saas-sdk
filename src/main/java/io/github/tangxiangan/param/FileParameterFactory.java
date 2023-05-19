@@ -9,12 +9,23 @@ import java.util.Objects;
  * @author tangxiangan
  */
 public class FileParameterFactory {
-    public static FileParameter getFileParameterByType(PDFToOfficeEnum type) {
-        if (Objects.requireNonNull(type) == PDFToOfficeEnum.PDF_TO_WORD) {
-            return null;
-            //TODO 定义其他类型的转档参数对象
+
+    public static <T extends FileParameter> T getFileParameterByType(PDFToOfficeEnum type) {
+        Class<T> clazz;
+        FileParameter fileParameter;
+        switch (type) {
+            case PDF_TO_EXCEL:
+                clazz = (Class<T>) PDFToExcelParameter.class;
+                fileParameter = new PDFToExcelParameter();
+                break;
+            case PDF_TO_HTML:
+                clazz = (Class<T>) PDFToHtmlParameter.class;
+                fileParameter = new PDFToHtmlParameter();
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported type:" + type);
         }
-        throw new IllegalArgumentException("Unsupported type:" + type);
+        return clazz.cast(fileParameter);
     }
 
     public static <T extends FileParameter> T getFileParameterByType(PDFServerEnum type) {
@@ -39,11 +50,11 @@ public class FileParameterFactory {
                 break;
             case DELETE:
                 clazz = (Class<T>) PageDeleteParameter.class;
-                fileParameter = new PageMergeParameter();
+                fileParameter = new PageDeleteParameter();
                 break;
             case EXTRACT:
                 clazz = (Class<T>) PageExtractParameter.class;
-                fileParameter = new PageMergeParameter();
+                fileParameter = new PageExtractParameter();
                 break;
             case ROTATION:
                 clazz = (Class<T>) PageRotationParameter.class;

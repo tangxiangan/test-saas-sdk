@@ -3,14 +3,15 @@ package io.github.tangxiangan.pojo.comPdfKit;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author tangxiangan
  */
 
 @Data
 public class ToolSupportResult {
-    private String sourceTypeName;
-    private String targetTypeName;
-    private String executeTypeUrl;
+
+    private List<Tool> tools;
 
 }

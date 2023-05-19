@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -129,10 +130,10 @@ public class ComPdfKitClient {
      *
      * @return ToolSupportResult
      */
-    public ToolSupportResult queryTools() {
+    public List<Tool> queryTools() {
         String url = address.concat(ComPdfKitConstant.API_V1_TOOL_SUPPORT);
-        ResponseEntity<ComPdfKitResult<ToolSupportResult>> response;
-        ParameterizedTypeReference<ComPdfKitResult<ToolSupportResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<ToolSupportResult>>() {};
+        ResponseEntity<ComPdfKitResult<List<Tool>>> response;
+        ParameterizedTypeReference<ComPdfKitResult<List<Tool>>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<List<Tool>>>() {};
         try {
             response = restTemplate.exchange(
                     url,
