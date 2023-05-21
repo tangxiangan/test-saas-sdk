@@ -58,12 +58,12 @@
     </dependencies>
 
 
-    <name>compdf-kit-sdk</name>
-    <description>compdf-kit-sdk</description>
+    <name>compdfkit-java-sdk</name>
+    <description>compdfkit-java-sdk</description>
     <groupId>io.github.tangxiangan</groupId>
-    <artifactId>compdfkit-sdk-java</artifactId>
+    <artifactId>compdfkit-java-sdk</artifactId>
     <!--需要特别注意,你上传的是SNAPSHOT仓库,所以此处版本号后缀必须带SNAPSHOT-->
-    <version>0.0.17</version>
+    <version>0.0.18</version>
     <!--项目信息...-->
     <url>https://github.com/tangxiangan/test-saas-sdk</url>
 
@@ -199,7 +199,7 @@
         </profile>
     </profiles>
     <build>
-        <finalName>test-saas-sdk</finalName>
+        <finalName>compdfkit-java-sdk</finalName>
     </build>
 
 </project>
