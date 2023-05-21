@@ -69,8 +69,8 @@
     <!--需要特别注意,你上传的是SNAPSHOT仓库,所以此处版本号后缀必须带SNAPSHOT-->
     <version>0.0.1-SNAPSHOT</version>
     <!--项目信息...-->
-    <name>demo</name>
-    <description>demo</description>
+    <name>compdf-java-sdk</name>
+    <description>compdf-java-sdk</description>
     <url>https://github.com/tangxiangan/test-saas-sdk</url>
 
     <!--开源协议...-->
@@ -151,10 +151,6 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.0.1</version>
                         <configuration>
-<!--                            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>-->
-                            <additionalJOptions>
-                                <additionalJOption>-Xdoclint:none</additionalJOption>
-                            </additionalJOptions>
                         </configuration>
                         <executions>
                             <execution>
@@ -165,21 +161,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--生成API文档插件-->
-<!--                    -->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-javadoc-plugin</artifactId>-->
-<!--                        <version>2.9.1</version>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>attach-javadocs</id>-->
-<!--                                <goals>-->
-<!--                                    <goal>jar</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
+
 
                     <!--gpg插件-->
                     <plugin>
@@ -213,20 +195,9 @@
             </distributionManagement>
         </profile>
 
-
-        <!-- 本地开发环境 -->
-        <profile>
-            <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <spring.profiles.active>local</spring.profiles.active>
-            </properties>
-        </profile>
     </profiles>
     <build>
-        <finalName>test-saas-sdk</finalName>
+        <finalName>compdf-java-sdk</finalName>
 
         <resources>
             <resource>
