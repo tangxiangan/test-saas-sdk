@@ -7,10 +7,11 @@
 
 package cn.kdan.compdfkit.pojo.comPdfKit;
 
-import java.util.List;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class QueryTenantAssetResult{
-	private List<TenantAssetItem> tenantAsset;
+public class QueryTenantAssetResult {
+    private List<TenantAssetItem> tenantAsset;
 }

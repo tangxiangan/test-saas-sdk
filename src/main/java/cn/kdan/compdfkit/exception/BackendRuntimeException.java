@@ -11,14 +11,6 @@ package cn.kdan.compdfkit.exception;
 public class BackendRuntimeException extends RuntimeException {
     private Integer code;
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
     public BackendRuntimeException() {
         super();
     }
@@ -38,6 +30,14 @@ public class BackendRuntimeException extends RuntimeException {
 
     public BackendRuntimeException(Throwable cause) {
         super(cause);
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
 }

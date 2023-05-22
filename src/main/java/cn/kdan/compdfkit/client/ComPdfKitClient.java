@@ -37,19 +37,27 @@ import static java.time.Duration.ofSeconds;
 
 public class ComPdfKitClient {
 
-    private final Logger log = LoggerFactory.getLogger(ComPdfKitClient.class);
-
-    private final String publicKey;
-
-    private final String secretKey;
-
     private static String accessToken;
-
     private static long expireTime;
-
+    private final Logger log = LoggerFactory.getLogger(ComPdfKitClient.class);
+    private final String publicKey;
+    private final String secretKey;
     private final String address;
     private final RestTemplate restTemplate;
 
+
+    public ComPdfKitClient(String publicKey, String secretKey) {
+        this.address = "https://api-server.compdf.com/server/";
+        this.publicKey = publicKey;
+        this.secretKey = secretKey;
+        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
+        restTemplateBuilder.setReadTimeout(ofSeconds(60 * 5));
+        restTemplateBuilder.setConnectTimeout(ofSeconds(60 * 5));
+        restTemplateBuilder.setBufferRequestBody(false);
+        this.restTemplate = restTemplateBuilder
+                .build();
+        refreshAccessToken();
+    }
 
     public void setAccessToken(String token, long expiresIn) {
         accessToken = token;
@@ -65,30 +73,15 @@ public class ComPdfKitClient {
 
     private void refreshAccessToken() {
         // Call the API to refresh the token
-        ComPdfKitOauthResult newToken = getComPdfKitAuth(this.publicKey,this.secretKey);
+        ComPdfKitOauthResult newToken = getComPdfKitAuth(this.publicKey, this.secretKey);
         setAccessToken(newToken.getAccessToken(), Long.parseLong(newToken.getExpiresIn()));
     }
-
-    public ComPdfKitClient(String publicKey, String secretKey) {
-        this.address = "https://api-server.compdf.com/server/";
-        this.publicKey = publicKey;
-        this.secretKey = secretKey;
-        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
-        restTemplateBuilder.setReadTimeout(ofSeconds(60 * 5));
-        restTemplateBuilder.setConnectTimeout(ofSeconds(60 * 5));
-        restTemplateBuilder.setBufferRequestBody(false);
-        this.restTemplate = restTemplateBuilder
-                .build();
-        refreshAccessToken();
-    }
-
-
 
     /**
      * get token
      *
      * @param publicKey publicKey
-     * @param secretKey  secretKey
+     * @param secretKey secretKey
      * @return String
      */
     private ComPdfKitOauthResult getComPdfKitAuth(String publicKey, String secretKey) {
@@ -98,7 +91,8 @@ public class ComPdfKitClient {
         tokenParam.put("publicKey", publicKey);
         tokenParam.put("secretKey", secretKey);
         ResponseEntity<ComPdfKitResult<ComPdfKitOauthResult>> responseEntity;
-        ParameterizedTypeReference<ComPdfKitResult<ComPdfKitOauthResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<ComPdfKitOauthResult>>() {};
+        ParameterizedTypeReference<ComPdfKitResult<ComPdfKitOauthResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<ComPdfKitOauthResult>>() {
+        };
         try {
             responseEntity = restTemplate.exchange(
                     address.concat(ComPdfKitConstant.API_V1_OAUTH_TOKEN),
@@ -111,11 +105,10 @@ public class ComPdfKitClient {
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_GET_TOKEN_FAIL);
         }
         if (responseEntity.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(responseEntity.getBody()) || !responseEntity.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
-            throw new BackendRuntimeException(Integer.valueOf(responseEntity.getBody().getCode()) ,  responseEntity.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(responseEntity.getBody().getCode()), responseEntity.getBody().getMsg());
         }
         return responseEntity.getBody().getData();
     }
-
 
 
     private HttpHeaders basicHeaders() {
@@ -133,7 +126,8 @@ public class ComPdfKitClient {
     public List<Tool> queryTools() {
         String url = address.concat(ComPdfKitConstant.API_V1_TOOL_SUPPORT);
         ResponseEntity<ComPdfKitResult<List<Tool>>> response;
-        ParameterizedTypeReference<ComPdfKitResult<List<Tool>>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<List<Tool>>>() {};
+        ParameterizedTypeReference<ComPdfKitResult<List<Tool>>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<List<Tool>>>() {
+        };
         try {
             response = restTemplate.exchange(
                     url,
@@ -145,8 +139,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TOOLS_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -160,7 +154,8 @@ public class ComPdfKitClient {
     public FileInfo queryFileInfo(String fileKey) {
         String url = address.concat(ComPdfKitConstant.API_V1_FILE_INFO).concat("?fileKey=").concat(fileKey);
         ResponseEntity<ComPdfKitResult<FileInfo>> response;
-        ParameterizedTypeReference<ComPdfKitResult<FileInfo>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<FileInfo>>() {};
+        ParameterizedTypeReference<ComPdfKitResult<FileInfo>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<FileInfo>>() {
+        };
         try {
             response = restTemplate.exchange(
                     url,
@@ -172,8 +167,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_FILE_INFO_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE) ){
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -186,7 +181,8 @@ public class ComPdfKitClient {
     public QueryTenantAssetResult queryAssetInfo() {
         String url = address.concat(ComPdfKitConstant.API_V1_ASSET_INFO);
         ResponseEntity<ComPdfKitResult<QueryTenantAssetResult>> response;
-        ParameterizedTypeReference<ComPdfKitResult<QueryTenantAssetResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<QueryTenantAssetResult>>() {};
+        ParameterizedTypeReference<ComPdfKitResult<QueryTenantAssetResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<QueryTenantAssetResult>>() {
+        };
         try {
             response = restTemplate.exchange(
                     url,
@@ -198,8 +194,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TENANT_ASSET_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -212,15 +208,16 @@ public class ComPdfKitClient {
      * @return QueryTaskRecordsResult
      */
     public QueryTaskRecordsResult queryTaskList(String page, String size) {
-        if(StringUtils.isEmpty(page)){
+        if (StringUtils.isEmpty(page)) {
             page = "1";
         }
-        if(StringUtils.isEmpty(size)){
+        if (StringUtils.isEmpty(size)) {
             size = "5";
         }
         String url = address.concat(ComPdfKitConstant.API_V1_TASK_LIST).concat("?page=").concat(page).concat("&size=").concat(size);
         ResponseEntity<ComPdfKitResult<QueryTaskRecordsResult>> response;
-        ParameterizedTypeReference<ComPdfKitResult<QueryTaskRecordsResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<QueryTaskRecordsResult>>() {};
+        ParameterizedTypeReference<ComPdfKitResult<QueryTaskRecordsResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<QueryTaskRecordsResult>>() {
+        };
         try {
             response = restTemplate.exchange(
                     url,
@@ -232,8 +229,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_QUERY_TASK_LIST_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -248,7 +245,8 @@ public class ComPdfKitClient {
     public CreateTaskResult createTask(String executeTypeUrl) {
         String url = address.concat(ComPdfKitConstant.API_V1_CREATE_TASK).replace("{executeTypeUrl}", executeTypeUrl);
         ResponseEntity<ComPdfKitResult<CreateTaskResult>> response;
-        ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>>() {};
+        ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>> typeRef = new ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>>() {
+        };
         try {
             response = restTemplate.exchange(
                     url,
@@ -260,8 +258,8 @@ public class ComPdfKitClient {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_CREATE_TASK_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_CREATE_TASK_FAIL + e.getMessage());
         }
-        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody() ) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)){
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !response.getBody().getCode().equals(CommonConstant.SUCCESS_CODE)) {
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -343,17 +341,17 @@ public class ComPdfKitClient {
         } catch (Exception e) {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_UPLOAD_FILE_FAIL + e.getMessage());
-        }finally {
+        } finally {
             try {
-                if(file.exists()){
+                if (file.exists()) {
                     boolean delete = file.delete();
                 }
-            }catch (Exception e){
-                log.error("Failed to delete file; {}",e.getMessage());
+            } catch (Exception e) {
+                log.error("Failed to delete file; {}", e.getMessage());
             }
         }
         if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())) {
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -365,24 +363,25 @@ public class ComPdfKitClient {
      * @param taskId taskId
      * @return CreateTaskResult
      */
-    public CreateTaskResult executeTask(String taskId){
-        log.info("Start executing task transfer, taskId: {}",taskId);
+    public CreateTaskResult executeTask(String taskId) {
+        log.info("Start executing task transfer, taskId: {}", taskId);
         String url = address.concat(ComPdfKitConstant.API_V1_EXECUTE_TASK).concat("?taskId=").concat(taskId);
         ResponseEntity<ComPdfKitResult<CreateTaskResult>> response;
-        ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>> result = new ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>>(){};
-        try{
+        ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>> result = new ParameterizedTypeReference<ComPdfKitResult<CreateTaskResult>>() {
+        };
+        try {
             response = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
-                    new HttpEntity<>(JsonUtils.getJsonString(taskId),basicHeaders()),
+                    new HttpEntity<>(JsonUtils.getJsonString(taskId), basicHeaders()),
                     result
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_EXECUTE_TASK_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_EXECUTE_TASK_FAIL + e.getMessage());
         }
-        if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode()) ){
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())) {
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
         return response.getBody().getData();
     }
@@ -393,29 +392,29 @@ public class ComPdfKitClient {
      * @param taskId taskId
      * @return QueryTaskInfoResult
      */
-    public QueryTaskInfoResult queryTaskInfo(String taskId){
-        log.info("Start to query the transfer status, taskId: {}",taskId);
+    public QueryTaskInfoResult queryTaskInfo(String taskId) {
+        log.info("Start to query the transfer status, taskId: {}", taskId);
         String url = address.concat(ComPdfKitConstant.API_V1_TASK_INFO).concat("?taskId=").concat(taskId);
         ResponseEntity<ComPdfKitResult<QueryTaskInfoResult>> response;
-        ParameterizedTypeReference<ComPdfKitResult<QueryTaskInfoResult>> result = new ParameterizedTypeReference<ComPdfKitResult<QueryTaskInfoResult>>(){};
-        try{
+        ParameterizedTypeReference<ComPdfKitResult<QueryTaskInfoResult>> result = new ParameterizedTypeReference<ComPdfKitResult<QueryTaskInfoResult>>() {
+        };
+        try {
             response = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
-                    new HttpEntity<>(JsonUtils.getJsonString(taskId),basicHeaders()),
+                    new HttpEntity<>(JsonUtils.getJsonString(taskId), basicHeaders()),
                     result
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(ComPdfKitConstant.EXCEPTION_MSG_TASK_INFO_FAIL + "{}", e.getMessage());
             throw new BackendRuntimeException(ComPdfKitConstant.EXCEPTION_MSG_TASK_INFO_FAIL + e.getMessage());
         }
-        if(response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())){
-            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()),  response.getBody().getMsg());
+        if (response.getStatusCode() != HttpStatus.OK || ObjectUtils.isEmpty(response.getBody()) || !CommonConstant.SUCCESS_CODE.equals(response.getBody().getCode())) {
+            throw new BackendRuntimeException(Integer.valueOf(response.getBody().getCode()), response.getBody().getMsg());
         }
-        log.info("Query status succeeded: {}",JsonUtils.getJsonString(response.getBody().getData()));
+        log.info("Query status succeeded: {}", JsonUtils.getJsonString(response.getBody().getData()));
         return response.getBody().getData();
     }
-
 
 
 }

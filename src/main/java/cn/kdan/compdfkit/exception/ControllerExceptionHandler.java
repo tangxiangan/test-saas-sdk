@@ -29,42 +29,42 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public ResultMap handlerArgumentCheck(MethodArgumentNotValidException ex){
+    public ResultMap handlerArgumentCheck(MethodArgumentNotValidException ex) {
         BindingResult bindingResult = ex.getBindingResult();
 
-        List<FieldError> fieldErrorList =  bindingResult.getFieldErrors();
+        List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
         StringBuilder sb = new StringBuilder(CommonConstant.PARAMS_MISSING_ERROR);
-        for(FieldError fieldError : fieldErrorList){
+        for (FieldError fieldError : fieldErrorList) {
             sb.append(fieldError.getField()).append(CommonConstant.STRING_SIGN_COLON);
             sb.append(fieldError.getDefaultMessage()).append(CommonConstant.STRING_SIGN_PERIOD);
         }
 
-        return new ResultMap(CommonConstant.EXCEPTION_CODE_PARAMETERS_ERROR,sb.toString());
+        return new ResultMap(CommonConstant.EXCEPTION_CODE_PARAMETERS_ERROR, sb.toString());
     }
 
     @ExceptionHandler(BackendRuntimeException.class)
     @ResponseBody
-    public ResultMap handlerRuntimeException(BackendRuntimeException e){
-        logger.error("业务异常:"+e.getMessage(),e);
-        if( !ObjectUtils.isEmpty(e.getCode()) ){
-            return new ResultMap(e.getCode(),e.getMessage());
+    public ResultMap handlerRuntimeException(BackendRuntimeException e) {
+        logger.error("业务异常:" + e.getMessage(), e);
+        if (!ObjectUtils.isEmpty(e.getCode())) {
+            return new ResultMap(e.getCode(), e.getMessage());
         }
-        return new ResultMap(CommonConstant.EXCEPTION_CODE_RUNTIME_ERROR,e.getMessage());
+        return new ResultMap(CommonConstant.EXCEPTION_CODE_RUNTIME_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResultMap handlerException(Exception e){
-        logger.info("错误信息:"+e.getMessage(),e);
-        return new ResultMap(CommonConstant.EXCEPTION_CODE_SERVER_ERROR,"错误信息： " + e.getMessage());
+    public ResultMap handlerException(Exception e) {
+        logger.info("错误信息:" + e.getMessage(), e);
+        return new ResultMap(CommonConstant.EXCEPTION_CODE_SERVER_ERROR, "错误信息： " + e.getMessage());
     }
 
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseBody
-    public ResultMap handlerMissingServletRequestParameterException(MissingServletRequestParameterException e){
-        logger.info(e.getMessage(),e);
-        return new ResultMap(CommonConstant.EXCEPTION_CODE_SERVER_ERROR,"参数错误： " + e.getParameterName() + " 缺失");
+    public ResultMap handlerMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        logger.info(e.getMessage(), e);
+        return new ResultMap(CommonConstant.EXCEPTION_CODE_SERVER_ERROR, "参数错误： " + e.getParameterName() + " 缺失");
     }
 
 }

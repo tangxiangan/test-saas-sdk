@@ -7,10 +7,9 @@
 
 package cn.kdan.compdfkit.pojo;
 
-import cn.kdan.compdfkit.utils.JsonUtils;
 import cn.kdan.compdfkit.constant.CommonConstant;
+import cn.kdan.compdfkit.utils.JsonUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 import java.util.Objects;
 

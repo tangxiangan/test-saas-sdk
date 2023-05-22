@@ -16,21 +16,22 @@ public class FileUtils {
 
     /**
      * multipartFileToFile
+     *
      * @param file file
      * @return File
      */
     public static File multipartFileToFile(MultipartFile file) {
         File toFile = null;
         try {
-        if (file.getSize() <= 0) {
-            file = null;
-        } else {
-            InputStream ins = null;
-            ins = file.getInputStream();
-            toFile = new File(file.getOriginalFilename());
-            inputStreamToFile(ins, toFile);
-            ins.close();
-        }
+            if (file.getSize() <= 0) {
+                file = null;
+            } else {
+                InputStream ins = null;
+                ins = file.getInputStream();
+                toFile = new File(file.getOriginalFilename());
+                inputStreamToFile(ins, toFile);
+                ins.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
